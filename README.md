@@ -1,9 +1,11 @@
-# Data Analysis Track Computing Setup Guide
+# Data Analysis Track
+
+## Computing Set Up
 
 Here are some things you will need to do all of the work in the data analysis
 track.
 
-## Access to a Unix-like terminal
+### Access to a Unix-like terminal
 
 If you are reading this from mac or some flavor of linux, congratulations!
 You've done it! If you are on windows, you have a choice to make. One option is
@@ -24,7 +26,7 @@ boils down to this:
 Following this reboot, if you run Command Prompt and enter `wsl` your terminal
 will be transformed to a bona fide Ubuntu terminal.
 
-## git
+### git
 
 Your computer likely already has git. You can find out by typing `git --version`
 into your terminal. If it says something other than "command not found" then
@@ -41,7 +43,7 @@ by running the following command to start the interactiove homebrew installer:
 
 Now you can install git with `sudo brew install git`
 
-## mamba
+### mamba
 
 It's probably for the best that we're all using roughly the same version of
 Python. We're also going to be using a lot of external libraries. The simplest
@@ -70,22 +72,25 @@ text `(base)` in front of your prompt. You will now have access to the `mamba`
 command. This tool will keep track of different versions of python and
 python packages for you and allow you to switch between them easily.
 
-## vscode
+### vscode
 
 You don't have to use [vscode](https://code.visualstudio.com) to edit code but
-it is a very good code editor. Ignore the marketing copy. For linux and macOS
-you can just use the website and install it like anything else.
+it is a very good editor. Ignore the marketing copy. You are welcome to use
+any text editor you feel comfortable using. I use vscode so when I show my
+screen it will usually be vscode. For linux and macOS you can just use the
+website and install it like anything else.
 
-If you're using WSL, you'll install vscode for windows but make sure you
+If you're using WSL, its basically the same but you need to be a little careful.
+You'll install vscode for windows but make sure you
 read the options as you are installing it. At some point it will ask you
 something about your `PATH`, make sure to say yes.
 
 Regardless of your OS, after installation you can launch vscode from the
-terminal with the command `code`. Its worth openning it and poking around a
+terminal with the command `code`. Its worth opening it and poking around a
 bit. It will probably suggest you install some extensions for Python or
 better WSL support and they are probably worth installing.
 
-## A GitHub Account
+### A GitHub Account
 
 Sorry for the back-to-back Microsoft recs. A decade or so ago they intentionally
 bought up a bunch of stuff in the open-source world and now here we are. We will
