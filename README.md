@@ -1,5 +1,19 @@
 # Data Analysis
 
+This is the GitHub repo for our class. You can look here if you want
+to refer back to anything or look ahead.
+
+We will be learning about data analysis in Python. This class will likely look a
+little different than a typical data analysis class. We will not be focusing on
+doing statistics per se. Instead, we will zoom out and think about how we can
+use the tools of data analysis to *construct arguments* that would be otherwise
+hard to make.
+
+We may use statistics to do this, we may not. We will certainly
+produce data visualizations, learn to work with data in tabular format far more
+effectively than we ever could in excel, and search through massive data dumps
+to pull out things that look interesting to us.
+
 ## Pre-class assignment
 
 There is a lot of data out there, very little of it has been examined by folks

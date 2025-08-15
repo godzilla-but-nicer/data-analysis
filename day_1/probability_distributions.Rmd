@@ -1,0 +1,130 @@
+---
+title: "Day 1"
+output: html_notebook
+---
+
+
+```{r}
+library(readr)
+library(readxl)
+library(dplyr)
+library(tibble)
+library(ggplot2)
+library(pracma)
+```
+
+
+# Probability Distributions
+
+The fundamental object in statistics is the probability distribution. A probability distribution describes the liklihood of observing a particular outcome in some unknown process. In practice, you already know what a probability distribution is. What are the odds that you roll a 6 on a single die? How about a 2?
+
+## Discrete Distributions
+
+You know already that the probability of rolling any particular number is one in six. We can express this as a table:
+
+| Outcome | Probability |
+| ------- | ----------- |
+| 1       | $\frac{1}{6}|
+| 2       | $\frac{1}{6}|
+| 3       | $\frac{1}{6}|
+| 4       | $\frac{1}{6}|
+| 5       | $\frac{1}{6}|
+| 6       | $\frac{1}{6}|
+
+This arrangement, where all outcomes are equally likely, is called a *uniform distribution*. In particular, this is a *discrete uniform distribution*. Outcomes are entirely separated, you cannot roll a 1.75 only a 1 or a 2. Many variables we might care about are discrete. Number of ICE arrests carried out in New York City in June is a discrete variable. Discrete variables don't need to be numbers. We could construct a probability distribution describing the odds of going in front of a particular judge when arrested in the jurisdiction of LA county.
+
+While many things are discrete, most things are not uniform. Let's build on our dice example and simulate the rolling of a pair of dice. This time, instead of writing a table of the probabilities we know to be true, we will instead calculate the fraction of the time each possible roll of two dice occurred.
+
+```{r}
+# dice roller
+roll <- function(count, sides) {
+  round(runif(count, min=1, max=sides))
+}
+
+first_die <- roll(100, 6)
+second_die <- roll(100, 6)
+
+sum <- first_die + second_die
+roll_counts <- tibble(sum_of_dice = sum) %>% 
+  group_by(sum_of_dice) %>% 
+  summarize(p = n() / 100)
+
+ggplot(roll_counts, aes(x=sum_of_dice, y=p)) + geom_col()
+```
+
+Its obvious that this is not uniform. Instead we see a peak in the middle of the range, we will see this shape again in the form of the Normal distribution but for now I want to highlight something else.
+
+In this simulated case, we could come up with probabilities ahead of time for each of these results because we know the underlying mechanism (rolling two dice and adding them together). In general, however, this isn't true. We often don't know what the distribution ought to be.
+
+This picture (and its associated numbers) is called an *empirical probability distribution*. It's empirical because its built out of our observations, its a probability distribution because it describes our best guess at what the underlying real distribution might be. We instead estimate the probability distribution based on the observed *frequencies* of the outcomes.
+
+Often, our variables of interest won't be discrete but will have the shape we saw above. Often our variable will be something like height in which case you can absolutely observe intermediate, fractional values. In other cases our variable might truly be discrete but with a number of possible outcomes large enough that we don't want to think about them as discrete outcomes. In this case we'll need a *continuous probability distribution*.
+
+## The Normal Distribution
+
+Easily the most well known probability distribution is the normal distribution. It looks like this:
+
+```{r}
+range <- linspace(-3, 3, n=100)
+x <- dnorm(range)
+norm_df <- tibble(range=range, density=x)
+norm_df %>% ggplot(aes(x=range, y=density)) +
+  geom_vline(xintercept=0, color="blue", linetype="dashed") +
+  annotate("text", x=0.3, y=0.27, label="Mean", color="blue") +
+  geom_vline(xintercept=-1, color="orange", linetype="dotdash") + 
+  geom_vline(xintercept=1, color="orange", linetype="dotdash") +
+  annotate("text", x = 1.4, y=0.36, color="orange", label="Std. Dev.") +
+  geom_line() +
+  annotate("text", x = -2.1, y = 0.1, label = "Standard Normal Distribution", angle=45)
+```
+
+This is the infamous "bell curve" from eugenics. Before we get into that, let's first just describe what it says. The normal distribution describes a random variable where most values are around the mean, in fact the most likely or *modal* outcome is identical to the mean. In addition, outcomes are less and less likely to occur as we move away from that mean. In this way it is very similar to our pair of dice distribution. It is unlike our pair of dice example in that it is *continuous*. We can look at this thing and find values with arbitrary precision.
+
+
+
+```{r}
+val <- rnorm(500)
+tibble(x = val) %>% ggplot(aes(x)) + geom_histogram()
+```
+
+Discrete probability distributions
+
+```{r}
+airquality %>% ggplot(aes(x=Wind)) + geom_histogram()
+```
+
+```{r}
+mtcars %>% ggplot(aes(x=wt)) + geom_histogram(bins=12)
+```
+
+```{r}
+data("Titanic", package="datasets")
+head(Titanic)
+```
+
+
+
+```{r}
+income <- read_csv("data/us_gov/income_by_county.csv") %>%
+  filter(!is.na(state))
+head(income)
+
+ggplot(income, aes(x=per_capita_2023)) + geom_histogram()
+```
+
+```{r}
+population <- read_csv("data/us_gov/county_populations.csv") %>%
+  select(STATE, COUNTY, POPESTIMATE2020, POPESTIMATE2021, POPESTIMATE2022, POPESTIMATE2023, POPESTIMATE2024)
+head(population)
+
+population %>% ggplot(aes(x=POPESTIMATE2024)) + geom_histogram()
+```
+
+```{r}
+
+```
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
